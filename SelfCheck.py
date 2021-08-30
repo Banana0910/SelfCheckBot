@@ -69,10 +69,6 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER"), chrome
 logchannel = NULL
 
 @bot.event
-async def on_ready():
-    checkpending.start()
-
-@bot.event
 async def on_message(message) :
     if message.content == '!setchannel' :
         logchannel = message.channel
