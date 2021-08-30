@@ -1,0 +1,1 @@
+worker: python SelfCheck.py
