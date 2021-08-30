@@ -1,9 +1,7 @@
-from asyncio.windows_events import NULL
-from discord.message import Message
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from discord.ext import commands, tasks
-import schedule, time, os, discord, datetime
+from discord.ext import commands,tasks
+import schedule,time,os,discord,datetime,asyncio
 
 sido = "경상남도"
 schoollevel = "중학교"
