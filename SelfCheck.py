@@ -1,94 +1,48 @@
-from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
-from discord.ext import commands,tasks
-import schedule,time,os,discord,datetime,asyncio
+import asyncio,discord,os
+from discord.ext import commands
+from random import *
 
-sido = "경상남도"
-schoollevel = "중학교"
-schoolname = "봉림중학교"
-
-studentname = "이대현"
-studentbirthday = "061110"
-studentpw = "0910"
-
-def TryFindElement(xpath) :
-    try :
-        driver.find_element_by_xpath(xpath)
-    except NoSuchElementException :
-        return False
-    return True
-
-def job() :
-    driver.get("https://hcs.eduro.go.kr/#/loginHome")
-    driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
-    driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
-    driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
-    driver.find_element_by_xpath("//*[@id='crseScCode']").send_keys(schoollevel)
-    driver.find_element_by_xpath("//*[@id='orgname']").send_keys(schoolname)
-    driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[1]/table/tbody/tr[3]/td[2]/button").click()
-    time.sleep(0.1)
-    driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[1]/ul/li/a").click()
-    driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[2]/input").click()
-    driver.find_element_by_xpath("//*[@id='user_name_input']").send_keys(studentname)
-    driver.find_element_by_xpath("//*[@id='birthday_input']").send_keys(studentbirthday)
-    driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-    time.sleep(1)
-    driver.find_element_by_xpath("//*[@id='password']").click()
-    chars = list(studentpw)
-    for c in chars :
-        for i in range(4,10) : 
-            if TryFindElement("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]") :
-                driver.find_element_by_xpath("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]").click()
-    driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-    time.sleep(1)
-    driver.find_element_by_class_name("btn").click()
-    time.sleep(1)
-    for i in range(1,4) :
-        driver.find_element_by_xpath("//*[@id='container']/div/div/div[2]/div[2]/dl[" + str(i) + "]/dd/ul/li[1]/label")
-    driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-    time.sleep(0.5)
-    driver.execute_script("window.history.go(-1)")
-    time.sleep(1)
-    state = driver.find_element_by_class_name("btn").text
-
-    now = datetime.datetime.now()
-    logchannel.send("[" + now.strftime('%Y-%m-%d %H:%M:%S') + "]에 [" + state + "]으로 자가진단을 하였습니다")
-
-game = discord.Game("자가진단 대기")
+game = discord.Game("틱톡 감시")
 bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game)
 
 bot.remove_command("help")
-
-option = webdriver.ChromeOptions()
-option.add_argument("--headless")
-option.add_argument("--disable-gpu")
-option.add_argument("--no-sandbox")
-
-chromepath = os.environ.get('CHROME')
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER"), chrome_options=option)
-logchannel = NULL
-
-@bot.event
-async def on_ready():
-    checkpending.start()
-
-@bot.event
-async def on_message(message) :
-    if message.content == '!setchannel' :
-        logchannel = message.channel
-        msg = await logchannel.send("자가진단 로그가 이 채널로 설정되었습니다")
-        time.sleep(5)
-        msg.delete()
-
-@tasks.loop(seconds=1)
-async def checkpending() :
-    schedule.every().monday.at("08:00").do(job)
-    schedule.every().tuesday.at("08:00").do(job)
-    schedule.every().wednesday.at("08:00").do(job)
-    schedule.every().thursday.at("08:00").do(job)
-    schedule.every().friday.at("08:00").do(job)
-
-    schedule.run_pending()
     
+@bot.event
+async def on_message(message):
+    message_content = message.content
+    if message.author.bot:
+            return None
+        
+    if message_content.lower().find("tiktok") >= 0 or message_content.lower().find("vt.com") >= 0:
+        await message.channel.send("틱톡은 우리 나라에선 금지다")
+        await message.delete()
+        
+    if message_content.find("트럼프") >= 0:
+        i = randint(1,6)
+        if i == 1:
+            await message.channel.send("왜 불렀는가??")
+        elif i == 2:
+            await message.channel.send("나는 틱톡을 우리 나라에서 금지 시켰지..")
+        elif i == 3:
+            await message.channel.send("무슨 문제라도 있는가?")
+        elif i == 4:
+            await message.channel.send("틱톡은 없어져야 한다고 생각하네")
+        elif i == 5:
+            await message.channel.send("바이든 Go Fuck Your Self")
+        elif i == 6:
+            await message.channel.send("음.. 이 방에 '아벌구'가 있는듯하구만")
+            
+    elif message_content.find("바이든") >= 0:
+        i = randint(1,4)
+        if i == 1:
+            await message.channel.send("어우 저 씹새키")
+        elif i == 2:
+            await message.channel.send("바이든 뒤졌으면^^")
+        elif i == 3:
+            await message.channel.send("바이든 그는 왜 살고 있는걸까요")
+        elif i == 4:
+            await message.channel.send("선거 내가 이긴건데.. ㄲㅂ")
+            
+    await bot.process_commands(message)
 access_token = os.environ['BOT_TOKEN']
 bot.run(access_token)
