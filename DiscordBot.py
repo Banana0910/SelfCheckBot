@@ -20,22 +20,6 @@ def TryFindElement(xpath) :
         return False
     return True
 
-game = discord.Game("자가진단 대기")
-bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game)
-
-bot.remove_command("help")
-
-option = webdriver.ChromeOptions()
-option.add_argument("--headless")
-option.add_argument("--disable-gpu")
-option.add_argument("--no-sandbox")
-
-chromepath = os.environ.get('CHROME')
-
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER"), chrome_options=option)
-
-logchannel = NULL
-
 def job() :
     driver.get("https://hcs.eduro.go.kr/#/loginHome")
     driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
@@ -71,6 +55,20 @@ def job() :
 
     now = datetime.datetime.now()
     logchannel.send("[" + now.strftime('%Y-%m-%d %H:%M:%S') + "]에 [" + state + "]으로 자가진단을 하였습니다")
+
+game = discord.Game("자가진단 대기")
+bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game)
+
+bot.remove_command("help")
+
+option = webdriver.ChromeOptions()
+option.add_argument("--headless")
+option.add_argument("--disable-gpu")
+option.add_argument("--no-sandbox")
+
+chromepath = os.environ.get('CHROME')
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER"), chrome_options=option)
+logchannel = NULL
 
 @bot.event
 async def on_ready():
