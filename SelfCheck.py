@@ -24,7 +24,6 @@ option.add_argument("--headless")
 option.add_argument("--disable-gpu")
 option.add_argument("--no-sandbox")
 option.add_argument("--disable-software-rasterizer")
-option.add_argument("--remote-debugging-port=9222")
 
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),options=option)
 logchannel = None
