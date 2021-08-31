@@ -20,12 +20,13 @@ bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game
 bot.remove_command("help")
 
 option = webdriver.ChromeOptions()
+option.binary_location = os.environ.get("CHROME")
 option.add_argument("--headless")
 option.add_argument("--disable-gpu")
 option.add_argument("--no-sandbox")
 option.add_argument("--disable-software-rasterizer")
 
-driver = webdriver.Chrome(r"/app/.chromedriver/bin/chromedriver",options=option)
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER"),options=option)
 logchannel = None
 
 errored = False
