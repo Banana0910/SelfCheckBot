@@ -26,7 +26,7 @@ option.add_argument("--no-sandbox")
 option.add_argument("--disable-software-rasterizer")
 option.add_argument("--remote-debugging-port=9222")
 
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),chrome_options=option)
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),options=option)
 logchannel = None
 
 errored = False
@@ -114,7 +114,7 @@ async def checkpending() :
 
 schedule.every().monday.at("08:00:00").do(job)
 schedule.every().tuesday.at("08:00:00").do(job)
-schedule.every().wednesday.at("08:00:00").do(job)
+schedule.every().wednesday.at("08:10:00").do(job)
 schedule.every().thursday.at("08:00:00").do(job)
 schedule.every().friday.at("08:00:00").do(job)
 
