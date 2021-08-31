@@ -25,7 +25,7 @@ option.add_argument("--disable-gpu")
 option.add_argument("--no-sandbox")
 option.add_argument("--disable-software-rasterizer")
 
-driver = webdriver.Chrome(os.environ['CHROMEDRIVER'],options=option)
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER"),options=option)
 logchannel = None
 
 errored = False
