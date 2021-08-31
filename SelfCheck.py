@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from discord.ext import commands,tasks
