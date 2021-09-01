@@ -25,7 +25,7 @@ option.add_argument("--disable-gpu")
 option.add_argument("--no-sandbox")
 option.add_argument("--disable-software-rasterizer")
 
-driver = webdriver.Chrome(os.environ.get("CHROMEDRIVER_PATH"),chrome_options=option)
+driver = webdriver.Chrome(os.environ.get("CHROMEDRIVER_PATH"),options=option)
 logchannel = None
 
 errored = False
@@ -40,6 +40,7 @@ def TryFindElement(xpath) :
 
 def job() :
     global sendmsg,stack,errored
+    print("job 실행됨")
     sendmsg = "job 실행됨"
 
 @bot.event
