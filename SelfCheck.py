@@ -58,6 +58,7 @@ async def on_message(message) :
 
 @tasks.loop(seconds=1)
 async def checkpending() :
+    print("im here")
     global logchannel, sendmsg, errored
     if len(str(sendmsg)) > 2 :
         await logchannel.send(sendmsg)
