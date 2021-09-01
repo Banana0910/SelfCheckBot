@@ -74,7 +74,8 @@ def job() :
         state = driver.find_element_by_class_name("btn").text
         now = datetime.datetime.now()
         sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "]에 [" + state + "]으로 자가진단을 처리하였습니다"
-    except Exception:
+    except Exception as e:
+        print(str(e))
         now = datetime.datetime.now()
         if stack > 2 :
             sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 3번의 시도에도 불구하고 문제가 발생하여 실패하였습니다"
