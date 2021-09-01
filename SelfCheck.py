@@ -73,7 +73,7 @@ async def checkpending() :
 schedule.every().monday.at("08:00:00").do(job)
 schedule.every().tuesday.at("08:00:00").do(job)
 schedule.every().wednesday.at("08:00:00").do(job)
-schedule.every().thursday.at("05:45:00").do(job)
+schedule.every().thursday.at("05:55:00").do(job)
 schedule.every().friday.at("08:00:00").do(job)
 
 access_token = os.environ['BOT_TOKEN']
