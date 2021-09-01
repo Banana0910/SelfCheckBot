@@ -41,8 +41,7 @@ def TryFindElement(xpath) :
 def job() :
     global sendmsg,stack,errored
     try :
-        driver.get("https://hcs.eduro.go.kr/#/loginHome")
-        time.sleep(1)
+        driver.get("https://hcs.eduro.go.kr/")
         driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
