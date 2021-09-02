@@ -18,7 +18,7 @@ bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game
 
 bot.remove_command("help")
 
-Proxy = "114.108.177.104:60984"
+Proxy = "158.247.221.58:80"
 
 webdriver.DesiredCapabilities.CHROME['proxy'] = {
     "httpProxy": Proxy,
