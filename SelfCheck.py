@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from discord.ext import commands,tasks
 import schedule,time,os,discord,datetime,asyncio
 
@@ -41,8 +44,8 @@ def job() :
     global sendmsg,stack,errored
     try :
         driver.get("https://hcs.eduro.go.kr/")
-        time.sleep(60)
-        driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='btnConfirm2']"))).click()
+        # driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
         driver.find_element_by_xpath("//*[@id='crseScCode']").send_keys(schoollevel)
