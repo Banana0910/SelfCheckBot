@@ -18,14 +18,13 @@ bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game
 
 bot.remove_command("help")
 
-option = webdriver.ChromeOptions()
-option.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-option.add_argument("--headless")
-option.add_argument("--disable-gpu")
-option.add_argument("--no-sandbox")
-option.add_argument("--disable-software-rasterizer")
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
 
-driver = webdriver.Chrome(os.environ.get("CHROMEDRIVER_PATH"),options=option)
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 logchannel = None
 
 errored = False
