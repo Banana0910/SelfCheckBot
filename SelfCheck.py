@@ -86,7 +86,7 @@ def job() :
     except Exception as e:
         print(str(e))
         now = datetime.datetime.now()
-        if stack > 2 :
+        if stack > 15 :
             sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 3번의 시도에도 불구하고 문제가 발생하여 실패하였습니다"
             stack = 0
             return None
