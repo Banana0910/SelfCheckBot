@@ -54,7 +54,7 @@ def job() :
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
         driver.find_element_by_xpath("//*[@id='crseScCode']").send_keys(schoollevel)
-        driver.find_element_by_xpath("//*[@id='orgname']").send_keys(schoolname)\
+        driver.find_element_by_xpath("//*[@id='orgname']").send_keys(schoolname)
         time.sleep(1)
         driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[1]/table/tbody/tr[3]/td[2]/button").click()
         time.sleep(0.1)
