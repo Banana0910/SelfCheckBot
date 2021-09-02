@@ -44,7 +44,7 @@ def job() :
     global sendmsg,stack,errored
     try :
         driver.get("https://www.naver.com/")
-        driver.find_element_by_xpath("//*[@id='header'']/div[1]/div/div[1]/h1/a").click()
+        driver.find_element_by_xpath("//*[@id='header']/div[1]/div/div[1]/h1/a").click()
         time.sleep(1)
         state = "lol"
         now = datetime.datetime.now()
