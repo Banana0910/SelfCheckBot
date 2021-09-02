@@ -21,9 +21,9 @@ bot.remove_command("help")
 Proxy = "114.108.177.104:60984"
 
 webdriver.DesiredCapabilities.CHROME['proxy'] = {
-    "httpProxy": PROXY,
-    "ftpProxy": PROXY,
-    "sslProxy": PROXY,
+    "httpProxy": Proxy,
+    "ftpProxy": Proxy,
+    "sslProxy": Proxy,
     "proxyType": "MANUAL"
 }
 
