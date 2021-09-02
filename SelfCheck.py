@@ -18,7 +18,7 @@ bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game
 
 bot.remove_command("help")
 
-Proxy = "158.247.221.58:80"
+Proxy = "112.121.26.202:8080"
 
 webdriver.DesiredCapabilities.CHROME['proxy'] = {
     "httpProxy": Proxy,
@@ -26,11 +26,12 @@ webdriver.DesiredCapabilities.CHROME['proxy'] = {
     "sslProxy": Proxy,
     "proxyType": "MANUAL"
 }
+webdriver.DesiredCapabilities.CHROME['acceptSslCerts']=True
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("--no-sandbox")
 
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
@@ -49,7 +50,7 @@ def TryFindElement(xpath) :
 def job() :
     global sendmsg,stack,errored
     try :
-        driver.get("https://hcs.eduro.go.kr/")
+        driver.get("https://hcs.eduro.go.kr/#/loginHome")
         driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
