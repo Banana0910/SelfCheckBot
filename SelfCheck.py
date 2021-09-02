@@ -18,31 +18,14 @@ bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game
 
 bot.remove_command("help")
 
-Proxy = "112.121.26.202:8080"
-
-webdriver.DesiredCapabilities.CHROME['proxy'] = {
-    "httpProxy": Proxy,
-    "ftpProxy": Proxy,
-    "sslProxy": Proxy,
-    "proxyType": "MANUAL"
-}
-webdriver.DesiredCapabilities.CHROME['acceptSslCerts']=True
-
-chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("--no-sandbox")
-
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 logchannel = None
 
 errored = False
 stack = 0
 
-def TryFindElement(xpath) :
+def TryFindElement(Tdriver,xpath) :
     try :
-        driver.find_element_by_xpath(xpath)
+        Tdriver.find_element_by_xpath(xpath)
     except NoSuchElementException :
         return False
     return True
@@ -50,6 +33,22 @@ def TryFindElement(xpath) :
 def job() :
     global sendmsg,stack,errored
     try :
+        Proxy = "112.121.26.202:8080"
+
+        webdriver.DesiredCapabilities.CHROME['proxy'] = {
+            "httpProxy": Proxy,
+            "ftpProxy": Proxy,
+            "sslProxy": Proxy,
+            "proxyType": "MANUAL"
+        }
+        webdriver.DesiredCapabilities.CHROME['acceptSslCerts']=True
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--no-sandbox")
+
+        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
         driver.get("https://hcs.eduro.go.kr/#/loginHome")
         driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
@@ -68,7 +67,7 @@ def job() :
         chars = list(studentpw)
         for c in chars :
             for i in range(4,10) : 
-                if TryFindElement("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]") :
+                if TryFindElement(driver, "//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]") :
                     driver.find_element_by_xpath("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]").click()
         driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
         time.sleep(1)
