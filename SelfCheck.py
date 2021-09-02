@@ -43,38 +43,10 @@ def TryFindElement(xpath) :
 def job() :
     global sendmsg,stack,errored
     try :
-        driver.get("https://hcs.eduro.go.kr/")
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='btnConfirm2']"))).click()
-        # driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
-        driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
-        driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
-        driver.find_element_by_xpath("//*[@id='crseScCode']").send_keys(schoollevel)
-        driver.find_element_by_xpath("//*[@id='orgname']").send_keys(schoolname)
-        driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[1]/table/tbody/tr[3]/td[2]/button").click()
-        time.sleep(0.1)
-        driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[1]/ul/li/a").click()
-        driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[2]/input").click()
-        driver.find_element_by_xpath("//*[@id='user_name_input']").send_keys(studentname)
-        driver.find_element_by_xpath("//*[@id='birthday_input']").send_keys(studentbirthday)
-        driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-        time.sleep(1.5)
-        driver.find_element_by_xpath("//*[@id='password']").click()
-        chars = list(studentpw)
-        for c in chars :
-            for i in range(4,10) : 
-                if TryFindElement("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]") :
-                    driver.find_element_by_xpath("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]").click()
-        driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
+        driver.get("https://www.naver.com/")
+        driver.find_element_by_xpath("//*[@id='header'']/div[1]/div/div[1]/h1/a").click()
         time.sleep(1)
-        driver.find_element_by_class_name("btn").click()
-        time.sleep(1)
-        for i in range(1,4) :
-            driver.find_element_by_xpath("//*[@id='container']/div/div/div[2]/div[2]/dl[" + str(i) + "]/dd/ul/li[1]/label").click()
-        driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-        time.sleep(0.5)
-        driver.execute_script("window.history.go(-1)")
-        time.sleep(1)
-        state = driver.find_element_by_class_name("btn").text
+        state = "lol"
         now = datetime.datetime.now()
         sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "]에 [" + state + "]으로 자가진단을 처리하였습니다"
     except Exception as e:
