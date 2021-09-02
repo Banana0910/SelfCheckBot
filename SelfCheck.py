@@ -98,8 +98,7 @@ async def on_message(message) :
         time.sleep(5)
         await msg.delete()
     elif content == '!run' :
-        now = datetime.datetime.now()
-        await logchannel.send("[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 실행")
+        await logchannel.send("자가진단 실행")
         job()
 
 @tasks.loop(seconds=1)
