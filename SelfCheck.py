@@ -66,7 +66,7 @@ def job() :
         driver.find_element_by_xpath("//*[@id='password']").click()
         chars = list(studentpw)
         for c in chars :
-            for i in range(4,10) : 
+            for i in range(4,10) :  
                 if TryFindElement(driver, "//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]") :
                     driver.find_element_by_xpath("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]").click()
         driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
@@ -87,7 +87,7 @@ def job() :
         driver.quit()
         now = datetime.datetime.now()
         if stack > 15 :
-            sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 3번의 시도에도 불구하고 문제가 발생하여 실패하였습니다"
+            sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 " + str(stack) + "번의 시도에도 불구하고 문제가 발생하여 실패하였습니다"
             stack = 0
             return None
         stack = stack + 1
