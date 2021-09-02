@@ -91,12 +91,18 @@ async def on_ready():
 
 @bot.event
 async def on_message(message) :
-    if message.content == '!set' :
+    content = message.content
+    if content == '!set' :
         global logchannel
         logchannel = message.channel
         msg = await logchannel.send("자가진단 로그가 " + str(logchannel) + "(으)로 설정되었습니다")
         time.sleep(5)
         await msg.delete()
+    elif content == '!run' :
+        global logchannel
+        now = datetime.datetime.now()
+        await logchannel.send("[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 실행")
+        job()
 
 @tasks.loop(seconds=1)
 async def checkpending() :
