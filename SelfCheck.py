@@ -41,6 +41,7 @@ def job() :
     global sendmsg,stack,errored
     try :
         driver.get("https://hcs.eduro.go.kr/")
+        time.sleep(60)
         driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
