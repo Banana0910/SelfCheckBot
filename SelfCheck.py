@@ -18,6 +18,15 @@ bot = commands.Bot(command_prefix='!',status=discord.Status.online,activity=game
 
 bot.remove_command("help")
 
+Proxy = "114.108.177.104:60984"
+
+webdriver.DesiredCapabilities.CHROME['proxy'] = {
+    "httpProxy": PROXY,
+    "ftpProxy": PROXY,
+    "sslProxy": PROXY,
+    "proxyType": "MANUAL"
+}
+
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
