@@ -32,23 +32,22 @@ def TryFindElement(Tdriver,xpath) :
 
 def job() :
     global sendmsg,stack,errored
+    Proxy = "112.121.26.202:8080"
+    webdriver.DesiredCapabilities.CHROME['proxy'] = {
+        "httpProxy": Proxy,
+        "ftpProxy": Proxy,
+        "sslProxy": Proxy,
+        "proxyType": "MANUAL"
+    }
+    webdriver.DesiredCapabilities.CHROME['acceptSslCerts']=True
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     try :
-        Proxy = "112.121.26.202:8080"
-
-        webdriver.DesiredCapabilities.CHROME['proxy'] = {
-            "httpProxy": Proxy,
-            "ftpProxy": Proxy,
-            "sslProxy": Proxy,
-            "proxyType": "MANUAL"
-        }
-        webdriver.DesiredCapabilities.CHROME['acceptSslCerts']=True
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--no-sandbox")
-
-        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
         driver.get("https://hcs.eduro.go.kr/#/loginHome")
         driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
@@ -85,6 +84,7 @@ def job() :
         sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "]에 [" + state + "]으로 자가진단을 처리하였습니다"
     except Exception as e:
         print(str(e))
+        driver.quit()
         now = datetime.datetime.now()
         if stack > 15 :
             sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 3번의 시도에도 불구하고 문제가 발생하여 실패하였습니다"
