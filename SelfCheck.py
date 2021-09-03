@@ -113,7 +113,7 @@ async def on_message(message) :
     if content == '!set' :
         logchannel = message.channel
         msg = await logchannel.send("자가진단 로그가 " + str(logchannel) + "(으)로 설정되었습니다")
-    elif content == '!run' :
+    elif content.startswith('!run') :
         l = content.split()
         if len(l) < 2:
             checkRequestblock = False
