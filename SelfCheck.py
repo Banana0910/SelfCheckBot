@@ -120,7 +120,7 @@ async def on_message(message) :
             checkRequestblock = False
             await logchannel.send("자가진단 실행")
             job()
-        elif l[1] == "1" :
+        elif l[2] == "1" :
             checkRequestblock = True
             await logchannel.send("리퀘스트 감지형으로 자가진단 실행")
             job()
@@ -129,7 +129,7 @@ async def on_message(message) :
         if len(l) < 2 :
             await logchannel.send("설정할 ip 주소를 입력하세요 (예 : !setip 000.000.00.00:0000)")
         else :
-            ip = l[1]
+            ip = l[2]
             await logchannel.send("프록시 ip가 [" + ip + "]로 설정이 되었습니다")
 
 @tasks.loop(seconds=1)
