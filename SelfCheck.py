@@ -1,3 +1,4 @@
+from discord.ext.commands.core import check
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from discord.ext import commands,tasks
@@ -20,6 +21,7 @@ bot.remove_command("help")
 
 logchannel = None
 
+checkRequestblock = False
 ip = "119.28.155.202:9999"
 errored = False
 stack = 0
@@ -50,6 +52,10 @@ def job() :
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     try :
         driver.get("https://hcs.eduro.go.kr/#/loginHome")
+        if checkRequestblock == True :
+            text = driver.find_element_by_xpath("/html/body/h1").text
+            sendmsg = text + "(이)가 감지됨"
+            return None
         driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
@@ -102,13 +108,20 @@ async def on_ready():
 @bot.event
 async def on_message(message) :
     content = message.content
-    global logchannel, ip
+    global logchannel, ip, checkRequestblock
     if content == '!set' :
         logchannel = message.channel
         msg = await logchannel.send("자가진단 로그가 " + str(logchannel) + "(으)로 설정되었습니다")
     elif content == '!run' :
-        await logchannel.send("자가진단 실행")
-        job()
+        l = content.split()
+        if len(l) < 2:
+            checkRequestblock = False
+            await logchannel.send("자가진단 실행")
+            job()
+        elif l[1] == "1" :
+            checkRequestblock = True
+            await logchannel.send("리퀘스트 감지형으로 자가진단 실행")
+            job()
     elif content.startswith("!setip") :
         l = content.split()
         if len(l) < 2 :
