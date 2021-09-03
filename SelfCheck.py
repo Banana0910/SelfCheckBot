@@ -32,7 +32,7 @@ def TryFindElement(Tdriver,xpath) :
 
 def job() :
     global sendmsg,stack,errored
-    Proxy = "112.121.26.202:8080"
+    Proxy = "119.28.155.202:9999"
     webdriver.DesiredCapabilities.CHROME['proxy'] = {
         "httpProxy": Proxy,
         "ftpProxy": Proxy,
