@@ -25,6 +25,7 @@ checkRequestblock = False
 ip = "119.28.155.202:9999"
 errored = False
 stack = 0
+repeatcount = 0
 
 def TryFindElement(Tdriver,xpath) :
     try :
@@ -34,7 +35,7 @@ def TryFindElement(Tdriver,xpath) :
     return True
 
 def job() :
-    global sendmsg,stack,errored,ip
+    global sendmsg,stack,errored,ip, repeatcount
     Proxy = ip
     webdriver.DesiredCapabilities.CHROME['proxy'] = {
         "httpProxy": Proxy,
@@ -55,7 +56,6 @@ def job() :
         if checkRequestblock == True :
             text = driver.find_element_by_xpath("/html/body/h1").text
             sendmsg = text + "(이)가 감지됨"
-            driver.quit()
             return None
         driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
@@ -90,12 +90,11 @@ def job() :
         state = driver.find_element_by_class_name("btn").text
         now = datetime.datetime.now()
         sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "]에 [" + state + "]으로 자가진단을 처리하였습니다"
-        driver.quit()
     except Exception as e:
         print(str(e))
         driver.quit()
         now = datetime.datetime.now()
-        if stack > 15 :
+        if stack >= repeatcount :
             sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 " + str(stack) + "번의 시도에도 불구하고 문제가 발생하여 실패하였습니다"
             stack = 0
             return None
@@ -110,7 +109,7 @@ async def on_ready():
 @bot.event
 async def on_message(message) :
     content = message.content
-    global logchannel, ip, checkRequestblock
+    global logchannel, ip, checkRequestblock, repeatcount
     if content == '!set' :
         logchannel = message.channel
         msg = await logchannel.send("자가진단 로그가 " + str(logchannel) + "(으)로 설정되었습니다")
@@ -120,7 +119,7 @@ async def on_message(message) :
             checkRequestblock = False
             await logchannel.send("자가진단 실행")
             job()
-        elif l[2] == "1" :
+        elif l[1] == "1" :
             checkRequestblock = True
             await logchannel.send("리퀘스트 감지형으로 자가진단 실행")
             job()
@@ -129,8 +128,16 @@ async def on_message(message) :
         if len(l) < 2 :
             await logchannel.send("설정할 ip 주소를 입력하세요 (예 : !setip 000.000.00.00:0000)")
         else :
-            ip = l[2]
+            ip = l[1]
             await logchannel.send("프록시 ip가 [" + ip + "]로 설정이 되었습니다")
+    elif content.startswith("!repeat") :
+        l = content.split()
+        if len(l) < 2:
+            await logchannel.send("설정할 반복 횟수를 입력하세요 (예 : !repeat 10)")
+        else :
+            repeatcount = int(l[1])
+            await logchannel.send("반복 횟수를 " + str(repeatcount) +"번으로 설정하였습니다")
+            
 
 @tasks.loop(seconds=1)
 async def checkpending() :
