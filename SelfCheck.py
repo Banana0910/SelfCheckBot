@@ -55,6 +55,7 @@ def job() :
         if checkRequestblock == True :
             text = driver.find_element_by_xpath("/html/body/h1").text
             sendmsg = text + "(이)가 감지됨"
+            driver.quit()
             return None
         driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
@@ -89,6 +90,7 @@ def job() :
         state = driver.find_element_by_class_name("btn").text
         now = datetime.datetime.now()
         sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "]에 [" + state + "]으로 자가진단을 처리하였습니다"
+        driver.quit()
     except Exception as e:
         print(str(e))
         driver.quit()
