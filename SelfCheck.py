@@ -20,6 +20,7 @@ bot.remove_command("help")
 
 logchannel = None
 
+ip = "119.28.155.202:9999"
 errored = False
 stack = 0
 
@@ -31,8 +32,8 @@ def TryFindElement(Tdriver,xpath) :
     return True
 
 def job() :
-    global sendmsg,stack,errored
-    Proxy = "119.28.155.202:9999"
+    global sendmsg,stack,errored,ip
+    Proxy = ip
     webdriver.DesiredCapabilities.CHROME['proxy'] = {
         "httpProxy": Proxy,
         "ftpProxy": Proxy,
@@ -101,15 +102,20 @@ async def on_ready():
 @bot.event
 async def on_message(message) :
     content = message.content
-    global logchannel
+    global logchannel, ip
     if content == '!set' :
         logchannel = message.channel
         msg = await logchannel.send("자가진단 로그가 " + str(logchannel) + "(으)로 설정되었습니다")
-        time.sleep(5)
-        await msg.delete()
     elif content == '!run' :
         await logchannel.send("자가진단 실행")
         job()
+    elif content.startswith("!setip") :
+        l = content.split()
+        if len(l) < 2 :
+            await logchannel.send("설정할 ip 주소를 입력하세요 (예 : !setip 000.000.00.00:0000)")
+        else :
+            ip = l[1]
+            await logchannel.send("프록시 ip가 [" + ip + "]로 설정이 되었습니다")
 
 @tasks.loop(seconds=1)
 async def checkpending() :
