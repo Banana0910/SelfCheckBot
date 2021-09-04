@@ -73,6 +73,9 @@ def job() :
         driver.find_element_by_xpath("//*[@id='birthday_input']").send_keys(studentbirthday)
         driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
         time.sleep(60)
+        if TryFindElement(driver, "//*[@id='btnConfirm']") :
+            sendmsg = "비밀번호 입력 중 확인 버튼 감지됨"
+        time.sleep(1)
         driver.find_element_by_xpath("//*[@id='password']").click()
         chars = list(studentpw)
         for c in chars :
