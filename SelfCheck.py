@@ -53,11 +53,13 @@ def job() :
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     try :
         driver.get("https://hcs.eduro.go.kr/#/loginHome")
-        if checkRequestblock == True :
+        if TryFindElement(driver, "//*[@id='btnConfirm2']") :
+            driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
+        else :
             text = driver.find_element_by_xpath("/html/body/h1").text
-            sendmsg = text + "(이)가 감지됨"
+            sendmsg = text + "(이)가 감지됨으로써 자가진단을 중지 합니다"
+            stack = 0
             return None
-        driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
         driver.find_element_by_xpath("//*[@id='crseScCode']").send_keys(schoollevel)
@@ -113,15 +115,8 @@ async def on_message(message) :
         logchannel = message.channel
         msg = await logchannel.send("자가진단 로그가 " + str(logchannel) + "(으)로 설정되었습니다")
     elif content.startswith('!run') :
-        l = content.split()
-        if len(l) < 2:
-            checkRequestblock = False
-            await logchannel.send("자가진단 실행")
-            job()
-        elif l[1] == "1" :
-            checkRequestblock = True
-            await logchannel.send("리퀘스트 감지형으로 자가진단 실행")
-            job()
+        await logchannel.send("자가진단 실행")
+        job()
     elif content.startswith("!setip") :
         l = content.split()
         if len(l) < 2 :
