@@ -72,7 +72,7 @@ def job() :
         driver.find_element_by_xpath("//*[@id='user_name_input']").send_keys(studentname)
         driver.find_element_by_xpath("//*[@id='birthday_input']").send_keys(studentbirthday)
         driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-        time.sleep(60)
+        time.sleep(30)
         if TryFindElement(driver, "//*[@id='btnConfirm']") :
             sendmsg = "비밀번호 입력 중 확인 버튼 감지됨"
         time.sleep(1)
@@ -83,15 +83,15 @@ def job() :
                 if TryFindElement(driver, "//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]") :
                     driver.find_element_by_xpath("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]").click()
         driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-        time.sleep(1)
+        time.sleep(10)
         driver.find_element_by_class_name("btn").click()
-        time.sleep(1)
+        time.sleep(10)
         for i in range(1,4) :
             driver.find_element_by_xpath("//*[@id='container']/div/div/div[2]/div[2]/dl[" + str(i) + "]/dd/ul/li[1]/label").click()
         driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
         time.sleep(0.5)
         driver.execute_script("window.history.go(-1)")
-        time.sleep(1)
+        time.sleep(2)
         state = driver.find_element_by_class_name("btn").text
         now = datetime.datetime.now()
         sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "]에 [" + state + "]으로 자가진단을 처리하였습니다"
