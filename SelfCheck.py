@@ -71,7 +71,7 @@ def job() :
         driver.find_element_by_xpath("//*[@id='user_name_input']").send_keys(studentname)
         driver.find_element_by_xpath("//*[@id='birthday_input']").send_keys(studentbirthday)
         driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-        time.sleep(5)
+        time.sleep(10)
         driver.find_element_by_xpath("//*[@id='password']").click()
         chars = list(studentpw)
         for c in chars :
