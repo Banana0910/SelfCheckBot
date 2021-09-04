@@ -35,7 +35,7 @@ def TryFindElement(Tdriver,xpath) :
     return True
 
 def job() :
-    global sendmsg,stack,errored,ip, repeatcount
+    global sendmsg,stack,errored,ip,repeatcount
     Proxy = ip
     webdriver.DesiredCapabilities.CHROME['proxy'] = {
         "httpProxy": Proxy,
@@ -62,9 +62,8 @@ def job() :
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
         driver.find_element_by_xpath("//*[@id='crseScCode']").send_keys(schoollevel)
         driver.find_element_by_xpath("//*[@id='orgname']").send_keys(schoolname)
-        time.sleep(1)
         driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[1]/table/tbody/tr[3]/td[2]/button").click()
-        time.sleep(0.1)
+        time.sleep(5)
         driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[1]/ul/li/a").click()
         driver.find_element_by_xpath("//*[@id='softBoardListLayer']/div[2]/div[2]/input").click()
         driver.find_element_by_xpath("//*[@id='user_name_input']").send_keys(studentname)
@@ -94,11 +93,11 @@ def job() :
         print(str(e))
         driver.quit()
         now = datetime.datetime.now()
+        stack = stack + 1
         if stack >= repeatcount :
             sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 " + str(stack) + "번의 시도에도 불구하고 문제가 발생하여 실패하였습니다"
             stack = 0
             return None
-        stack = stack + 1
         errored = True
         return None
 
