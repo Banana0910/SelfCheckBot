@@ -2,8 +2,7 @@ from discord.ext.commands.core import check
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from discord.ext import commands,tasks
-import schedule,time,os,discord,datetime,asyncio
-
+import schedule,time,os,discord,datetime,traceback
 sido = "경상남도"
 schoollevel = "중학교"
 schoolname = "봉림중학교"
