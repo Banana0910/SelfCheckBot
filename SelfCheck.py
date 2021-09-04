@@ -76,7 +76,7 @@ def job() :
         if TryFindElement(driver, "//*[@id='btnConfirm']") :
             sendmsg = "비밀번호 입력 중 확인 버튼 감지됨"
         time.sleep(1)
-        driver.find_element_by_xpath("//*[@id='password']").click()
+        driver.find_element_by_xpath("//*[@id='WriteInfoForm']/table/tbody/tr/td/input[1]").click()
         chars = list(studentpw)
         for c in chars :
             for i in range(4,10) :  
