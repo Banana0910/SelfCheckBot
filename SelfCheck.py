@@ -56,6 +56,7 @@ def job() :
         if TryFindElement(driver, "//*[@id='btnConfirm2']") :
             driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         else :
+            time.sleep(3)
             text = driver.find_element_by_xpath("/html/body/h1").text
             sendmsg = text + "(이)가 감지됨으로써 자가진단을 중지 합니다"
             stack = 0
