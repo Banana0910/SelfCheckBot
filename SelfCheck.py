@@ -97,6 +97,7 @@ def job() :
         sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "]에 [" + state + "]으로 자가진단을 처리하였습니다"
     except Exception as e:
         print(str(e))
+        print(traceback.format_exc())
         driver.quit()
         now = datetime.datetime.now()
         stack = stack + 1
