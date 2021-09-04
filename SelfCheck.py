@@ -83,7 +83,7 @@ def job() :
                 if TryFindElement(driver, "//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]") :
                     driver.find_element_by_xpath("//*[@id='password_mainDiv']/div[" + str(i) + "]/a[contains(@aria-label, '" + c + "')]").click()
         driver.find_element_by_xpath("//*[@id='btnConfirm']").click()
-        time.sleep(10)
+        time.sleep(30)
         driver.find_element_by_class_name("btn").click()
         time.sleep(10)
         for i in range(1,4) :
