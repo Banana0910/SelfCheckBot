@@ -52,14 +52,7 @@ def job() :
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     try :
         driver.get("https://hcs.eduro.go.kr/#/loginHome")
-        if TryFindElement(driver, "//*[@id='btnConfirm2']") :
-            driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
-        else :
-            time.sleep(3)
-            text = driver.find_element_by_xpath("/html/head/title").text
-            sendmsg = text + "(이)가 감지됨으로써 자가진단을 중지 합니다"
-            stack = 0
-            return None
+        driver.find_element_by_xpath("//*[@id='btnConfirm2']").click()
         driver.find_element_by_xpath("//*[@id='schul_name_input']").click()
         driver.find_element_by_xpath("//*[@id='sidolabel']").send_keys(sido)
         driver.find_element_by_xpath("//*[@id='crseScCode']").send_keys(schoollevel)
@@ -95,13 +88,14 @@ def job() :
         now = datetime.datetime.now()
         sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "]에 [" + state + "]으로 자가진단을 처리하였습니다"
     except Exception as e:
+        exc = traceback.format_exc()
         print(str(e))
-        print(traceback.format_exc())
+        print(exc)
         driver.quit()
         now = datetime.datetime.now()
         stack = stack + 1
         if stack >= repeatcount :
-            sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 " + str(stack) + "번의 시도에도 불구하고 문제가 발생하여 실패하였습니다"
+            sendmsg = "[" + now.strftime('%Y-%m-%d %H:%M') + "] 자가진단 중 " + str(stack) + "번의 시도에도 불구하고 문제가 발생하여 실패하였습니다 (" + exc + ")"
             stack = 0
             return None
         errored = True
@@ -118,7 +112,7 @@ async def on_message(message) :
     if content == '!set' :
         logchannel = message.channel
         msg = await logchannel.send("자가진단 로그가 " + str(logchannel) + "(으)로 설정되었습니다")
-    elif content.startswith('!run') :
+    elif content == '!run' :
         await logchannel.send("자가진단 실행")
         job()
     elif content.startswith("!setip") :
@@ -135,6 +129,8 @@ async def on_message(message) :
         else :
             repeatcount = int(l[1])
             await logchannel.send("반복 횟수를 " + str(repeatcount) +"번으로 설정하였습니다")
+    elif content == "!status" :
+        await logchannel.send("프록시 ip : " + ip + "\n반복 횟수 : " + str(repeatcount))
             
 
 @tasks.loop(seconds=1)
